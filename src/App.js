@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react';
+import { Toaster } from 'react-hot-toast';
+// import { fetchPictures } from '../..services/api';
+import SearchBar from './components/SearchBar/SearchBar';
+import './App.module.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    pictureName: null,
+  };
+
+  handleFormSubmit = pictureName => {
+    this.setState({ pictureName });
+  };
+
+  render() {
+    return (
+      <div>
+        <Toaster />
+        <SearchBar onSearch={this.handleFormSubmit} />
+      </div>
+    );
+  }
 }
-
-export default App;
