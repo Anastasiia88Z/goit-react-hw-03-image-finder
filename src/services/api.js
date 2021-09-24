@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://pixabay.com';
+axios.defaults.baseURL = 'https://pixabay.com';
 axios.defaults.params = {
   image_type: 'photo',
   orientation: 'horizontal',
