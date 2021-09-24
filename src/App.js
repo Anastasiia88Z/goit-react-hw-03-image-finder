@@ -4,6 +4,8 @@ import { fetchPictures } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button.jsx';
+import Loader from './components/Loader/Loader.jsx';
+import Modal from './components/Modal/Modal.jsx';
 import './App.module.css';
 
 export default class App extends Component {
@@ -66,8 +68,17 @@ export default class App extends Component {
     }));
   };
 
+  toggleModal = () => {
+    this.setState(state => ({
+      showModal: !state.showModal,
+    }));
+    this.setState({
+      selectedImg: '',
+    });
+  };
+
   render() {
-    const { pictures } = this.state;
+    const { pictures, reqStatus, selectedImg, showModal } = this.state;
     const showButton = pictures.length >= 12;
 
     return (
@@ -76,6 +87,14 @@ export default class App extends Component {
         <SearchBar onSearch={this.handleFormSubmit} />
         <ImageGallery pictures={pictures} onSelect={this.handleSelectedImage} />
         {showButton && <Button onClick={this.loadMoreButtonClick} />}
+        {reqStatus === 'pending' && <Loader />}
+        {showModal && (
+          <Modal
+            src={this.state.selectedImg}
+            alt={selectedImg.tags}
+            onClose={this.toggleModal}
+          />
+        )}
       </div>
     );
   }
