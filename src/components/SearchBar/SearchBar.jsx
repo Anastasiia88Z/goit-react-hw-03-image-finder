@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import s from './SerchBar.module.css';
+import s from './SearchBar.module.css';
 
 const SearchBar = ({ onSearch }) => {
   const handleSearch = e => {
     e.preventDefault();
     onSearch(e.target.elements.pictureName.value.toLowerCase());
   };
+
   return (
     <header className={s.Searchbar}>
       <form className={s.SearchForm} onSubmit={handleSearch}>
@@ -16,8 +17,9 @@ const SearchBar = ({ onSearch }) => {
         <input
           className={s.SearchFormInput}
           type="text"
-          autocomplete="off"
-          autofocus
+          name="pictureName"
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
       </form>
