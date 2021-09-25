@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { fetchPictures } from './services/api';
+import Container from './components/Container/Container';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button.jsx';
 import Loader from './components/Loader/Loader.jsx';
 import Modal from './components/Modal/Modal.jsx';
-import './App.module.css';
 
 export default class App extends Component {
   state = {
@@ -33,7 +33,7 @@ export default class App extends Component {
           reqStatus: 'resolved',
         }));
 
-        if (nextSearch.trim() === '' || pictures.length === 0) {
+        if (nextSearch.trim() === '' || !pictures.length) {
           return toast.error(
             `Sorry, but there are no pictures with  ${nextSearch}`,
           );
@@ -82,12 +82,17 @@ export default class App extends Component {
     const showButton = pictures.length >= 12;
 
     return (
-      <div>
+      <Container>
         <Toaster />
+
         <SearchBar onSearch={this.handleFormSubmit} />
+
         <ImageGallery pictures={pictures} onSelect={this.handleSelectedImage} />
-        {showButton && <Button onClick={this.loadMoreButtonClick} />}
+
         {reqStatus === 'pending' && <Loader />}
+
+        {showButton && <Button onClick={this.loadMoreButtonClick} />}
+
         {showModal && (
           <Modal
             src={this.state.selectedImg}
@@ -95,7 +100,7 @@ export default class App extends Component {
             onClose={this.toggleModal}
           />
         )}
-      </div>
+      </Container>
     );
   }
 }
